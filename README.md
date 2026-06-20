@@ -1,18 +1,25 @@
-Smart Calcify
+                                                         Smart Calcify
 
-A calculator dashboard with standard, scientific, and unit-converter modes — built with plain HTML, CSS, and JavaScript. No frameworks, no build step.
+A calculator dashboard with standard, scientific, and unit-converter modes. Plain HTML, CSS, and JavaScript — no frameworks, no build step.
 
-Live demo: https://your-username.github.io/smart-calcify/
-(replace your-username with your actual GitHub username once deployed)
 
-Features
+                                                            Features
 
-1.Standard & Scientific modes — basic arithmetic plus sin, cos, tan, log, ln, square root, powers, and π, with a DEG/RAD toggle
-2.Unit Converter — area, length, and temperature conversions with a one-click swap
-3.Calculation History — past results are saved during your session; click any entry to reuse it
-4.Voice input — speak an expression and it's calculated automatically (browser-dependent, see Notes)
-5.Bilingual UI — switch between English and Hindi
-6.Dark / Light theme — preference is remembered on your next visit
-7.Read Aloud — optional spoken feedback for keypresses and results
-8.Responsive — works down to mobile screen widths
-9.Keyboard support — type numbers and operators directly, Enter to evaluate, Esc to clear
+
+1.Standard and scientific modes — arithmetic plus sin, cos, tan, log, ln, square root, powers, and π, with a DEG/RAD toggle
+
+2.Unit converter for area, length, and temperature, with a one-click swap
+
+3.Calculation history for the session — click any entry to reuse it
+
+4.Voice input — speak an expression and it calculates automatically (Chrome/Edge only, see Notes)
+
+5.English/Hindi toggle
+
+6.Dark/light theme, remembered on your next visit
+
+7.Optional read-aloud feedback for keypresses and results
+
+8.Responsive down to mobile widths
+
+9.Keyboard support — type numbers and operators, Enter to evaluate, Esc to clear
