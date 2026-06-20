@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Calcify — a bilingual (English/Hindi) calculator dashboard with standard, scientific, unit converter, voice input, and calculation history modes.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232f66f6'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3E%3D%3C/text%3E%3C/svg%3E">
+    <title>Smart Calcify — Calculator Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="app-icon">📊</span>
+                <div class="app-name-block">
+                    <h1 class="app-name">Smart Calcify</h1>
+                    <p class="app-tagline" data-en="Calculator Workspace" data-hi="कैलकुलेटर कार्यक्षेत्र">Calculator Workspace</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" role="tablist">
+                <button class="menu-btn active" id="btn-standard" role="tab" aria-selected="true" onclick="changeTab('standard')">
+                    <span>🔢</span> <span class="lang-txt" data-en="Standard" data-hi="साधारण">Standard</span>
+                </button>
+                <button class="menu-btn" id="btn-scientific" role="tab" aria-selected="false" onclick="changeTab('scientific')">
+                    <span>🔬</span> <span class="lang-txt" data-en="Scientific" data-hi="वैज्ञानिक">Scientific</span>
+                </button>
+                <button class="menu-btn" id="btn-converter" role="tab" aria-selected="false" onclick="changeTab('converter')">
+                    <span>📐</span> <span class="lang-txt" data-en="Converter" data-hi="परिवर्तक">Converter</span>
+                </button>
+                <button class="menu-btn" id="btn-history" role="tab" aria-selected="false" onclick="changeTab('history')">
+                    <span>🕒</span> <span class="lang-txt" data-en="History" data-hi="इतिहास">History</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-settings">
+                <div class="setting-row">
+                    <span>🌍</span>
+                    <select id="langMenu" onchange="updateLanguage()" aria-label="Language">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <span>🌓</span>
+                    <select id="themeMenu" onchange="updateTheme()" aria-label="Theme">
+                        <option value="dark">Dark Mode</option>
+                        <option value="light">Light Mode</option>
+                    </select>
+                </div>
+                <div class="setting-row check-row">
+                    <input type="checkbox" id="audioToggle">
+                    <label for="audioToggle" data-en="Read Aloud" data-hi="बोलकर पढ़ें">Read Aloud</label>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="content-header">
+                <div class="title-block">
+                    <h2 id="view-title" data-en="Standard Mode" data-hi="साधारण मोड">Standard Mode</h2>
+                    <p id="app-status" data-en="Ready" data-hi="तैयार">Ready</p>
+                </div>
+                <div class="header-controls">
+                    <button id="angle-toggle" class="angle-toggle hidden" onclick="toggleAngleMode()" title="Toggle Degrees / Radians">DEG</button>
+                    <button id="mic-btn" class="voice-trigger" onclick="handleVoiceInput()" title="Voice Input" aria-label="Voice Input">🎤</button>
+                </div>
+            </header>
+
+            <section class="display-section">
+                <div id="preview-screen" class="preview-text" aria-live="polite"></div>
+                <div class="input-row">
+                    <input type="text" id="calc-screen" value="0" readonly aria-label="Calculator display">
+                    <button class="copy-btn" onclick="copyToClipboard()" title="Copy Value" aria-label="Copy result">📋</button>
+                </div>
+            </section>
+
+            <section id="math-grid" class="keypad-grid">
+                <button class="btn btn-sci" onclick="addSciOp('sin')">sin</button>
+                <button class="btn btn-sci" onclick="addSciOp('cos')">cos</button>
+                <button class="btn btn-sci" onclick="addSciOp('tan')">tan</button>
+                <button class="btn btn-sci" onclick="addSciOp('sqrt')">√</button>
+                <button class="btn btn-sci" onclick="addSciOp('log')">log</button>
+                <button class="btn btn-sci" onclick="addSciOp('ln')">ln</button>
+                <button class="btn btn-sci" onclick="appendInput('^', 'power')">x^y</button>
+                <button class="btn btn-sci" onclick="appendInput('pi', 'pi')">π</button>
+
+                <button class="btn btn-clear" onclick="clearAll()">AC</button>
+                <button class="btn btn-func" onclick="appendInput('(', 'open bracket')">(</button>
+                <button class="btn btn-func" onclick="appendInput(')', 'close bracket')">)</button>
+                <button class="btn btn-operator" onclick="dropLastChar()">⌫</button>
+
+                <button class="btn btn-num" onclick="appendInput('7', '7')">7</button>
+                <button class="btn btn-num" onclick="appendInput('8', '8')">8</button>
+                <button class="btn btn-num" onclick="appendInput('9', '9')">9</button>
+                <button class="btn btn-operator" onclick="appendInput('/', 'divided by')">÷</button>
+
+                <button class="btn btn-num" onclick="appendInput('4', '4')">4</button>
+                <button class="btn btn-num" onclick="appendInput('5', '5')">5</button>
+                <button class="btn btn-num" onclick="appendInput('6', '6')">6</button>
+                <button class="btn btn-operator" onclick="appendInput('*', 'multiplied by')">×</button>
+
+                <button class="btn btn-num" onclick="appendInput('1', '1')">1</button>
+                <button class="btn btn-num" onclick="appendInput('2', '2')">2</button>
+                <button class="btn btn-num" onclick="appendInput('3', '3')">3</button>
+                <button class="btn btn-operator" onclick="appendInput('-', 'minus')">−</button>
+
+                <button class="btn btn-func" onclick="negateInput()">+/-</button>
+                <button class="btn btn-num" onclick="appendInput('0', '0')">0</button>
+                <button class="btn btn-num" onclick="appendInput('.', 'point')">.</button>
+                <button class="btn btn-operator" onclick="appendInput('+', 'plus')">+</button>
+
+                <button class="btn btn-equals" onclick="evaluateExpression()" style="grid-column: span 4;">=</button>
+            </section>
+
+            <section id="converter-panel" class="sub-panel hidden">
+                <div class="converter-box">
+                    <div class="form-group">
+                        <label data-en="Measurement Category" data-hi="मापन श्रेणी">Measurement Category</label>
+                        <select id="unitType" onchange="setupUnitDropdowns()">
+                            <option value="area" data-en="Area (Acres / m²)" data-hi="क्षेत्रफल (एकड़ / वर्ग मीटर)">Area (Acres / m²)</option>
+                            <option value="length" data-en="Length (km / miles)" data-hi="लंबाई (किमी / मील)">Length (km / miles)</option>
+                            <option value="temp" data-en="Temperature (°C / °F)" data-hi="तापमान (°C / °F)">Temperature (°C / °F)</option>
+                        </select>
+                    </div>
+
+                    <div class="io-split-row">
+                        <div class="form-group">
+                            <label data-en="From" data-hi="से">From</label>
+                            <input type="number" id="fromAmount" value="1" oninput="runConversion()">
+                            <select id="fromUnit" onchange="runConversion()"></select>
+                        </div>
+                        <button class="swap-icon" onclick="swapConverterUnits()" title="Swap units" aria-label="Swap units">⇌</button>
+                        <div class="form-group">
+                            <label data-en="To Output" data-hi="परिणाम">To Output</label>
+                            <div class="static-result" id="toAmount">0.00</div>
+                            <select id="toUnit" onchange="runConversion()"></select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="history-panel" class="sub-panel hidden">
+                <div class="history-wrapper">
+                    <div class="history-header">
+                        <h4 data-en="Calculations History" data-hi="इतिहास रिकॉर्ड">Calculations History</h4>
+                        <button class="clear-history-btn" onclick="flushLogs()" data-en="Clear All" data-hi="सब साफ़ करें">Clear All</button>
+                    </div>
+                    <div id="history-container" class="history-scroll-list"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        Created by <a href="#" onclick="return false;">SANYAM JAIN</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
