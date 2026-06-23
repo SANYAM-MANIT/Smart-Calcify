@@ -1,4 +1,4 @@
-                                                         Smart Calcify
+                                                 Smart Calcify
 
 A calculator dashboard with standard, scientific, and unit-converter modes. Plain HTML, CSS, and JavaScript — no frameworks, no build step.
 
