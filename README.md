@@ -1,9 +1,9 @@
-                                                 Smart Calcify
+                                                  Smart Calcify
 
 A calculator dashboard with standard, scientific, and unit-converter modes. Plain HTML, CSS, and JavaScript — no frameworks, no build step.
 
 
-                                                            Features
+                                                    Features
 
 
 1.Standard and scientific modes — arithmetic plus sin, cos, tan, log, ln, square root, powers, and π, with a DEG/RAD toggle
